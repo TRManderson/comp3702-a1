@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Iterable
 from enum import IntEnum
 
 
@@ -68,5 +68,5 @@ def query_from_string(data: str) -> Query:
     return Query(alg, initial, goal)
 
 
-def res_to_result(data: List[int]) -> str:
+def res_to_result(data: Iterable[int]) -> str:
     return "-".join(map(str, data))
