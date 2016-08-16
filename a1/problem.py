@@ -9,16 +9,42 @@ class Problem(object):
         self.graph = graph
         self.debug = debug
 
+        # used in A*
+        self.heuristic_cache = {}  # type Dict[(int, int), float]
+        self.cost_incident = {}  # type: Dict[int, float]
+
+        # fill self.cost_incident
+        for node, children in self.graph.items():
+            for child, cost in children.items():
+                if child not in self.cost_incident
+                or cost < self.cost_incident[child]:
+                    self.cost_incident[child] = cost
+
     def query(self, query: u.Query) -> List[int]:
         if self.debug:
             print("Performing query: {}".format(str(query)))
-        result = getattr(self, query.alg.name)(query.initial, query.goal) # type: List[int]
+        result = getattr(self, query.alg.name)(
+            query.initial, query.goal
+        )  # type: List[int]
         if self.debug:
             print()
         return result
 
     def astar_heuristic(self, current: int, goal: int) -> float:
-        return 0
+        if (current, goal) not in self.heuristic_cache:
+            if self.graph[current]:
+                # If there are outgoing edges, take the smallest cost to
+                # traverse one
+                result = min(self.graph[current].values())
+            else:
+                # If there aren't outgoing edges, assume there is no cost
+                result = 0
+            if goal not in self.graph[current]:
+                # If the goal is not an adjacent node, we have to a traverse an
+                # edge that is incident on it
+                result += self.cost_incident[goal]
+            self.heuristic_cache[(current, goal)] = result
+        return self.heuristic_cache[(current, goal)]
 
     def astar(self, initial: int, goal: int) -> (int, List[int]):
         heap = [(self.astar_heuristic(initial, goal), 0, initial, [])]
@@ -64,7 +90,7 @@ class Problem(object):
                 print(cost, current, path)
 
             # If we've seen a better path to this node, don't check from here
-            if current in best_to and best_to[current].cost < cost:
+            if current in best_to and best_to[current] < cost:
                 continue
 
             newpath = path + [current]
