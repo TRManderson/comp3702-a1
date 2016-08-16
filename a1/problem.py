@@ -16,8 +16,7 @@ class Problem(object):
         # fill self.cost_incident
         for node, children in self.graph.items():
             for child, cost in children.items():
-                if child not in self.cost_incident
-                or cost < self.cost_incident[child]:
+                if child not in self.cost_incident or cost < self.cost_incident[child]:
                     self.cost_incident[child] = cost
 
     def query(self, query: u.Query) -> List[int]:
