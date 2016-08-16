@@ -17,7 +17,39 @@ class Problem(object):
             print()
         return result
 
+    def astar_heuristic(self, current: int, goal: int) -> float:
+        return 0
+
     def astar(self, initial: int, goal: int) -> (int, List[int]):
+        heap = [(self.astar_heuristic(initial, goal), 0, initial, [])]
+
+        best_to = {}
+
+        while heap != []:
+            c_estimated, c_so_far, current, path = hq.heappop(heap)
+
+            if self.debug:
+                print(c_estimated, c_so_far, current, path)
+
+            if current in best_to and best_to[current] < c_so_far:
+                continue
+
+            new_path = path + [current]
+
+            if current == goal:
+                return c_so_far, new_path
+
+            for next_node, step_cost in self.graph[current].items():
+                new_cost = c_so_far + step_cost
+                hq.heappush(heap, (
+                    self.astar_heuristic(next_node, goal) + new_cost,
+                    new_cost,
+                    next_node,
+                    new_path,
+                ))
+
+            best_to[current] = c_so_far
+
         return 0, []
 
     def uniform(self, initial: int, goal: int) -> (int, List[int]):
