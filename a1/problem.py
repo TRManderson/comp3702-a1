@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Set
 import a1.util as u
 import heapq as hq
 from collections import namedtuple
@@ -48,7 +48,7 @@ class Problem(object):
     def astar(self, initial: int, goal: int) -> (int, List[int]):
         heap = [(self.astar_heuristic(initial, goal), 0, initial, [])]
 
-        best_to = {}
+        visited = set()  # type: Set[int]
 
         while heap != []:
             c_estimated, c_so_far, current, path = hq.heappop(heap)
@@ -56,8 +56,9 @@ class Problem(object):
             if self.debug:
                 print(c_estimated, c_so_far, current, path)
 
-            if current in best_to and best_to[current] < c_so_far:
+            if current in visited:
                 continue
+            visited.add(current)
 
             new_path = path + [current]
 
@@ -72,8 +73,6 @@ class Problem(object):
                     next_node,
                     new_path,
                 ))
-
-            best_to[current] = c_so_far
 
         return 0, []
 
