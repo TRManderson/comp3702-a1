@@ -17,8 +17,8 @@ def graph_from_matrix(
         directed: bool = False
 ) -> Dict[int, Dict[int, float]]:
     g = {}  # type: Dict[int, Dict[int, float]]
-    for i, row in enumerate(data):
-        for j, weight in enumerate(row):
+    for i, row in enumerate(data, 1):
+        for j, weight in enumerate(row, 1):
             if i not in g:
                 g[i] = {}
             if directed and j not in g:

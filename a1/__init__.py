@@ -61,7 +61,7 @@ def main():
     problem = Problem(graph)
 
     for query in queries:
-        args.outfile.write(u.res_to_result(problem.query(query)) + "\n")
+        args.outfile.write(u.res_to_result(problem.query(query)[1]) + "\n")
     args.outfile.close()
 
 
