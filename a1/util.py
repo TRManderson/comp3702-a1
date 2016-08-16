@@ -70,3 +70,11 @@ def query_from_string(data: str) -> Query:
 
 def res_to_result(data: Iterable[int]) -> str:
     return "-".join(map(str, data))
+
+def stringify_graph(graph: Dict[int, Dict[int, float]]) -> str:
+    result = ""
+    for node, children in graph.items():
+        result += "{} ->\n".format(node)
+        for child, cost in children.items():
+            result += "  {}: {}\n".format(child, cost)
+    return result

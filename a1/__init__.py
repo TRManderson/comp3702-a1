@@ -56,6 +56,9 @@ def main():
         ),
         directed=args.directed,
     )
+    if args.debug:
+        print("Environment graph:")
+        print(u.stringify_graph(graph))
 
     querydata = args.queryfile.read()
     args.queryfile.close()
