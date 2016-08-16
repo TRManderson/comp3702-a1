@@ -30,6 +30,13 @@ parser.add_argument(
     type=argparse.FileType(mode='w+'),
     help='The output file name',
 )
+parser.add_argument(
+    '--undirected',
+    action='store_false',
+    default=True,
+    dest='directed',
+    help='interpret the environment map as an undirected graph'
+)
 
 
 def main():
@@ -40,7 +47,8 @@ def main():
     graph = u.graph_from_matrix(
         u.matrix_from_filecontents(
             mapdata
-        )
+        ),
+        directed=args.directed,
     )
 
     querydata = args.queryfile.read()
