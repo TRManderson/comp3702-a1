@@ -37,6 +37,12 @@ parser.add_argument(
     dest='directed',
     help='interpret the environment map as an undirected graph'
 )
+parser.add_argument(
+    '--debug',
+    action='store_true',
+    default=False,
+    help='print debug stuff'
+)
 
 
 def main():
@@ -58,7 +64,7 @@ def main():
         map(str.strip, querydata.split("\n")[1:])
     ))
 
-    problem = Problem(graph)
+    problem = Problem(graph, debug=args.debug)
 
     for query in queries:
         args.outfile.write(u.res_to_result(problem.query(query)[1]) + "\n")
