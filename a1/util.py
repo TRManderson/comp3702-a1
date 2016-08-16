@@ -14,19 +14,19 @@ def matrix_from_filecontents(data: str) -> List[List[float]]:
 
 def graph_from_matrix(
         data: List[List[float]],
-        directed: bool = False
+        undirected: bool = False
 ) -> Dict[int, Dict[int, float]]:
     g = {}  # type: Dict[int, Dict[int, float]]
     for i, row in enumerate(data, 1):
         for j, weight in enumerate(row, 1):
             if i not in g:
                 g[i] = {}
-            if directed and j not in g:
+            if undirected and j not in g:
                 g[j] = {}
             if weight <= 0:
                 continue
             g[i][j] = weight
-            if directed:
+            if undirected:
                 g[j][i] = weight
     return g
 

@@ -32,9 +32,8 @@ parser.add_argument(
 )
 parser.add_argument(
     '--undirected',
-    action='store_false',
-    default=True,
-    dest='directed',
+    action='store_true',
+    default=False,
     help='interpret the environment map as an undirected graph'
 )
 parser.add_argument(
@@ -54,7 +53,7 @@ def main():
         u.matrix_from_filecontents(
             mapdata
         ),
-        directed=args.directed,
+        undirected=args.undirected,
     )
     if args.debug:
         print("Environment graph:")
