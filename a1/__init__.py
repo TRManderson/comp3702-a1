@@ -1,4 +1,6 @@
 import argparse
+import a1.util as u
+from a1.problem import Problem
 
 
 # The argument format provided by the spec is as follows:
@@ -32,6 +34,28 @@ parser.add_argument(
 
 def main():
     args = parser.parse_args()
+
+    mapdata = args.mapfile.read()
+    args.mapfile.close()
+    graph = u.graph_from_matrix(
+        u.matrix_from_filecontents(
+            mapdata
+        )
+    )
+
+    querydata = args.queryfile.read()
+    args.queryfile.close()
+    queries = list(map(
+        u.query_from_string,
+        map(str.strip, querydata.split("\n")[1:])
+    ))
+
+    problem = Problem(graph)
+
+    for query in queries:
+        args.outfile.write(u.res_to_result(problem.query(query)) + "\n")
+    args.outfile.close()
+
 
 if __name__ == "__main__":
     main()
