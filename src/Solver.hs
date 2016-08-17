@@ -12,9 +12,9 @@ graphFromStr filecontents =
   graph
   where
     lined = lines filecontents
-    body = map (map (read)) . map (splitOn " ") . tail $ lined
-    nodecount = (flip (-) $ 1) . length $ filecontents
-    edges = [(i :: Node, j :: Node, cost) | (i, row) <- zip [1..] body, (j, cost) <- zip [1..] row, cost > fromInteger 0]
+    body = map (map read . splitOn " ") . tail $ lined
+    nodecount = flip (-) 1 . length $ filecontents
+    edges = [(i :: Node, j :: Node, cost) | (i, row) <- zip [1..] body, (j, cost) <- zip [1..] row, cost > 0]
     graph = mkGraph (zip [1..nodecount] (repeat ())) edges
 
 data Algorithm = Uniform | Astar | NoAlg
@@ -32,13 +32,13 @@ queryFromStr row =
       start = read startS
       end = read endS
 
-query :: (Graph gr) => Query -> (gr () Float) -> Path
-query (alg, initial, goal) graph = solver initial goal graph
+query :: (Graph gr) => Query -> gr () Float -> Path
+query (alg, initial, goal) = solver initial goal
   where
     solver = case alg of
       Uniform -> uniform
       Astar -> astar
-      NoAlg -> (\_ _ _ -> [])
+      NoAlg -> \_ _ _ -> []
 
 astarWithHeuristic :: (Graph gr) => (Node -> Node -> gr () Float -> Float) -> Solver gr Float
 astarWithHeuristic heuristic initial goal graph =
@@ -49,7 +49,7 @@ astarWithHeuristic heuristic initial goal graph =
       | otherwise = case match node graph of
         (Just (_, _, (), from), g') -> inner . mergeAll . (h':) . map (
             \(nodeCost, n) -> unit (
-                cost + nodeCost + (heuristic initial goal graph)
+                cost + nodeCost + heuristic initial goal graph
               ) (cost+nodeCost, n, node:path)
           ) $ from
         (Nothing, g') -> node:path
@@ -67,3 +67,5 @@ astar = astarWithHeuristic myHeuristic
 uniform :: (Graph gr) => Solver gr Float
 uniform = astarWithHeuristic (\ _ _ _ -> 0)
 
+
+bfs :: Graph gr => Node -> gr () ()
