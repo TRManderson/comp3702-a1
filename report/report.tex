@@ -21,7 +21,11 @@ What is the formal definition of the navigation agent in this assignment? What t
 
 
 \section{Heuristic Selection}
-What is the heuristic you use for A* search? Please explain why do you think it is a good heuristic?
+In order for a heuristic to be a good selection, it must form a lower bound on the cost to reach the goal from a given node. For a general graph with no additional environment information, the only things we can use in heuristics are edge distances. For all nodes but the goal node, we must traverse an outgoing edge to reach the goal. As such, we are guranteed that the least weight of all edges outgoing from a node provides a lower bound on the distance to the goal.
+
+The conceptual complement of this is edges incident on the goal node. We are guaranteed to traverse at least one edge incident on the goal, assuming our initial node is not the goal node. As such, we are guaranteed that the least weight of all edges incident on the goal provides a lower bound on the distance to the goal.
+
+Combining these two, for edges not adjacent to the goal, we can use the sum of both the minimum weight of edges incident on the goal and the minimum weight of edges outgoing from the current node. For nodes adjacent to the goal, we can instead use the maximum of these two values (as both provide a valid lower bound). We do not need to consider cases where we are starting at the goal node as the heuristic will never need to be checked.
 
 
 \section{Uniform Search/A* comparison}
