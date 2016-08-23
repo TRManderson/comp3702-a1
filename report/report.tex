@@ -1,6 +1,8 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=1in]{geometry}
-
+\usepackage{tikz}
+\usetikzlibrary{graphs}
+\usepackage{float}
 
 \title{COMP3702 Assignment 1}
 \author{
@@ -17,7 +19,7 @@ Tristan Roberts (42846879)
 \clearpage
 
 \section{Agent}
-What is the formal definition of the navigation agent in this assignment? What type of agent is the navigation agent (i.e., discrete/continuous, fully/partially observable, deterministic/non-deterimistic, static/dynamic)? Please explain your selection.
+The navigation agent is a deterministic agent (assuming a deterministic heuristic) that performs in a discrete, fully observable, static environment. We are given the full environment map before being asked to perform any navigation tasks, and are able to use this entire map to make decisions, so the environment is fully observable. Nodes and edges of mathematical graphs are discrete structures, and so the environment is discrete. The environment itself does not change at all, so the environment is static. Given a deterministic heuristic, all decisions are deterministic, so the agent itself is deterministc.
 
 
 \section{Heuristic Selection}
@@ -29,11 +31,16 @@ Combining these two, for edges not adjacent to the goal, we can use the sum of b
 
 
 \section{Uniform Search/A* comparison}
+
 Please compare the performance (in terms of time and space) of Uniform Cost and A* search as the number of vertices in the graph increases. Please explain your findings. This explanation should include comparisons with the theoretical results
+
+Uniform cost is equivalent to A* with a \(\theta(1)\) computational complexity, but is guaranteed to take greater than or equal to the number of iterations of an A* search with a good heuristic.
+
 
 
 \section{Question 5}
-Suppose you article given 2 environment maps, say A and B. True or False that if the number of vertices in A is larger than in B, then given the same implementation of A* search, finding an optimal path in A will always take longer time than in B? Please explain your answer.
+If there are two maps A and B such that A has more vertices than B, it is not true that finding an optimal path with A* in A will always take longer than in B. The trivial counterexample for this is a graph A with \(n > 3\) nodes, and graph B with \(m = n + 1\) nodes.
 
+Assume nodes in A and B correspond to natural numbers and have directed edges such that for all edges, they have an edge going from node \(x\) to node \(x+1\) (modulo the size of the given graph). If we are finding the optimal path from node \(1\) to node \(n\) in A, and node \(n\) to node \(m\) in B, finding the path in A will trivially take longer as it must visit every node and traverse all edges but one, whereas the path in B requires visiting only the inital node, the goal node, and the single edge between them, and thus will take less time.
 
 \end{document}
