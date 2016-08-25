@@ -6,11 +6,11 @@
 
 \title{COMP3702 Assignment 1}
 \author{
-Tom Manderson (43158935)
+Tom Manderson (43158935) - A* Heuristic, Report
 \\
-Tristan Roberts (42846879)
+Tristan Roberts (42846879) - Uniform Cost Heuristic, Report
 }
-\date{Friday, August 26}
+\date{Friday, 26 August 2016}
 
 
 \begin{document}
@@ -18,29 +18,31 @@ Tristan Roberts (42846879)
 \tableofcontents
 \clearpage
 
-\section{Agent}
-The navigation agent is a deterministic agent (assuming a deterministic heuristic) that performs in a discrete, fully observable, static environment. We are given the full environment map before being asked to perform any navigation tasks, and are able to use this entire map to make decisions, so the environment is fully observable. Nodes and edges of mathematical graphs are discrete structures, and so the environment is discrete. The environment itself does not change at all, so the environment is static. Given a deterministic heuristic, all decisions are deterministic, so the agent itself is deterministc.
+\section{Agent Definition}
+Todo
+
+
+\section{Agent Type}
+The navigation agent is a deterministic agent (assuming a deterministic heuristic) that performs in a discrete, fully observable and static environment. As the full environment map is provided before being asked to perform any navigation tasks, and the entire map is able to be used to make decisions, the environment is fully observable. Secondly, as nodes and edges of mathematical graphs are discrete structures, the environment is discrete. The environment itself does not change in any way, so the environment is also static. Finally, given a deterministic heuristic, all decisions are deterministic, so the agent itself is deterministic.
 
 
 \section{Heuristic Selection}
-In order for a heuristic to be a good selection, it must form a lower bound on the cost to reach the goal from a given node. For a general graph with no additional environment information, the only things we can use in heuristics are edge distances. For all nodes but the goal node, we must traverse an outgoing edge to reach the goal. As such, we are guranteed that the least weight of all edges outgoing from a node provides a lower bound on the distance to the goal.
+In order for a heuristic to be a good selection, it must form a lower bound on the cost to reach the goal from a given node. For a general graph with no additional environment information, the only things that can be used in heuristics are edge distances. For all nodes but the goal node, the algorithm must traverse an outgoing edge to reach the goal. As such, it is guaranteed that the least weight of all edges outgoing from a node provides a lower bound on the distance to the goal.
 
-The conceptual complement of this is edges incident on the goal node. We are guaranteed to traverse at least one edge incident on the goal, assuming our initial node is not the goal node. As such, we are guaranteed that the least weight of all edges incident on the goal provides a lower bound on the distance to the goal.
+The conceptual complement of this is edges incident to the goal node. It is guaranteed that at least one edge incident to the goal is traversed, assuming the initial node is not the goal node. As such, it is guaranteed that the least weight of all edges incident to the goal provides a lower bound on the distance to the goal.
 
-Combining these two, for edges not adjacent to the goal, we can use the sum of both the minimum weight of edges incident on the goal and the minimum weight of edges outgoing from the current node. For nodes adjacent to the goal, we can instead use the maximum of these two values (as both provide a valid lower bound). We do not need to consider cases where we are starting at the goal node as the heuristic will never need to be checked.
+Combining these two, for edges not adjacent to the goal, the sum of both the minimum weight of edges incident to the goal and the minimum weight of edges outgoing from the current node can be used. For nodes adjacent to the goal, the maximum of these two values (as both provide a valid lower bound) can be used instead. Cases that start at the goal node do not need to be considered, as the heuristic will never need to be checked.
 
 
-\section{Uniform Search/A* comparison}
+\section{A*/Uniform Search comparison}
+%Please compare the performance (in terms of time and space) of Uniform Cost and A* search as the number of vertices in the graph increases. Please explain your findings. This explanation should include comparisons with the theoretical results
 
-Please compare the performance (in terms of time and space) of Uniform Cost and A* search as the number of vertices in the graph increases. Please explain your findings. This explanation should include comparisons with the theoretical results
-
-Uniform cost is equivalent to A* with a \(\theta(1)\) computational complexity, but is guaranteed to take greater than or equal to the number of iterations of an A* search with a good heuristic.
-
+The uniform cost search is equivalent to the A* search with a \(\theta(1)\) computational complexity, however it is guaranteed to take greater than or equal to the number of iterations of an A* search with a good heuristic.
 
 
 \section{Question 5}
 If there are two maps A and B such that A has more vertices than B, it is not true that finding an optimal path with A* in A will always take longer than in B. The trivial counterexample for this is a graph A with \(n > 3\) nodes, and graph B with \(m = n + 1\) nodes.
 
-Assume nodes in A and B correspond to natural numbers and have directed edges such that for all edges, they have an edge going from node \(x\) to node \(x+1\) (modulo the size of the given graph). If we are finding the optimal path from node \(1\) to node \(n\) in A, and node \(n\) to node \(m\) in B, finding the path in A will trivially take longer as it must visit every node and traverse all edges but one, whereas the path in B requires visiting only the inital node, the goal node, and the single edge between them, and thus will take less time.
+Assume nodes in A and B correspond to natural numbers and have directed edges such that for all nodes, there is an edge going from node \(x\) to node \(x+1\) (modulo the size of the given graph). If the optimal path from node \(1\) to node \(n\) is found in A, and node \(n\) to node \(m\) in B, finding the path in A will take longer as it must visit every node and traverse all edges but one, whereas the path in B requires visiting only the initial node, the goal node, and the single edge between them, and thus will take less time.
 
 \end{document}
