@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
-from sys import hexversion
+import sys
 
-if hexversion < 0x3040000:
+if sys.hexversion < 0x3040000:
     print("This assignment requires Python 3.4 or higher to run")
     sys.exit(0)
 
