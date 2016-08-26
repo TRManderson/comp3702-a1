@@ -19,8 +19,7 @@ Tristan Roberts (42846879) - Uniform Cost Heuristic, Report
 \clearpage
 
 \section{Agent Definition}
-Todo
-
+The action space (A) is the movement to any vertex connected to the currently occupied vertex. The state space is the matrix provided in the input map file that shows the weighting of the edge between each vertex or zero if there is no edge connecting that pair of vertices. As the environment is fully observable, the perception space (O) is the same as the state space. After moving to a new vertex, the world dynamics (T) change to reflect the possible moves from that vertex. The perception function does not change as the environment is fully observable. The utility function is the inverse (i.e. \(\frac{1}{sum}\)) sum of costs of traversing each edge if the path ends at the destination vertex, 0 if it does not reach the destination vertex and -1 if the current vertex has no connected vertices it can travel to and is not the destination vertex.
 
 \section{Agent Type}
 The navigation agent is a deterministic agent (assuming a deterministic heuristic) that performs in a discrete, fully observable and static environment. As the full environment map is provided before being asked to perform any navigation tasks, and the entire map is able to be used to make decisions, the environment is fully observable. Secondly, as nodes and edges of mathematical graphs are discrete structures, the environment is discrete. The environment itself does not change in any way, so the environment is also static. Finally, given a deterministic heuristic, all decisions are deterministic, so the agent itself is deterministic.
